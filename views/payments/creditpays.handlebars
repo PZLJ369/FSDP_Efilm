@@ -1,0 +1,70 @@
+ <div class="card bg-light" style="box-shadow: 0.3px 0.3px #888888;">
+  <div class="card card-header bg-white">
+    <div class="container">
+    <div class="row">
+      <img src="/img/visaMasterCard.png" class="d-flex justify-content-start" alt="card" style="width: 3em;height:3em;padding: 3px;">
+      <span class="text-center" style="font-size: 1.4em;margin:0 auto;"><strong>Pay using Debit / Credit card</strong></span>
+    </div>
+  </div>
+
+  </div>
+  <br>
+{{!-- enter card details --}}
+<div class="container">
+<div class="row justify-content-md-around">
+<div class="col-12 col-md-7">
+  <h5 class="card card-header text-center text-white" style="background-color:rgb(49, 202, 158)">Please enter your card details</h5>
+<div class="card card-body" style="box-shadow: 0.3px 0.3px #888888;">
+
+  	<form action="/payments/creditpays" method="post">
+				<div class="form-group mx-sm-4">
+					<label for="cardNumber">Card Number</label>
+					<input type="text" class="form-control" name="cardNumber" required>
+				</div>
+        <div class="form-group mx-sm-4">
+					<label for="expiryDate">Expiry Date</label>
+          <input id="datepicker" name="expiryDate" readonly />
+					{{!-- <input type="date" name="expiryDate" class="form-control" value="{{expiryDate}}" required> --}}
+				</div>
+				<div class="form-group mx-sm-4">
+					<label for="cardHolder">Cardholder's Name</label>
+					<input type="text" name="cardHolder" class="form-control" required>
+				</div>
+        <hr class="mx-sm-4">
+        <div class="d-flex justify-content-between mx-sm-4">
+          <a href="/Payment" class="btn btn-outline-secondary">Cancel</a>
+          {{!-- <a href="/payments/creditview" class="btn btn-success">Pay</a> --}}
+          <button type="submit" class="btn btn-success">Pay</button>
+        </div>
+			</form>
+      
+</div>
+</div>
+{{!-- display items in cart --}}
+<div class="col-6 col-md-4">
+  <div class="card card-body" style="box-shadow: 0.3px 0.3px #888888;">
+      <div>
+        <h5 style="color:rgb(49, 202, 158)">Display items</h5>
+        <hr>
+        <div>item 1</div>
+        <div>item 2</div>
+        <div>item 3</div>
+        <hr>
+        <div class="d-flex justify-content-between"><span>Total Price:</span><strong>S$ <span style="color: red;">...</span></strong></div>
+      </div>
+    </div>
+</div>
+</div>
+<br>
+</div>
+<br>
+</div>
+
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		value: new Date().toLocaleDateString('EN-SG'),
+		uiLibrary: 'bootstrap4',
+	});
+</script>
+

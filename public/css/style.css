@@ -1,0 +1,11 @@
+.logo{
+  width:130px;
+  margin:auto;
+}
+.navbar-custom {
+  background-color: #000000;
+}
+
+body{
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/bgImg.jpg");
+}
