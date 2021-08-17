@@ -2,10 +2,53 @@
   width:130px;
   margin:auto;
 }
+/* navbar color */
 .navbar-custom {
   background-color: #000000;
+}
+
+.nav-link:hover{
+  text-decoration: underline;
 }
 
 body{
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/img/bgImg.jpg");
 }
+
+#main-page-img{
+  color: white; 
+  background-image: url('/img/sw.jpg');
+  background-size: cover; 
+  height:370px; 
+  padding-top: 170px; 
+  text-align: center; 
+  text-shadow: 4.5px 4.5px 8px #000;
+  border-style: solid;
+  border-width: 1px;
+  border-color: aliceblue;
+}
+
+#all-movies{
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  border-style: solid;
+  border-width: 1px;
+  border-color: aliceblue;
+}
+
+#cart-login{
+  color: aliceblue; 
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+#cart-login:hover{
+  background-color: aliceblue;
+  color:black;
+}
+
+.cart-item{
+  background-color: white;
+  border-radius: 3px;
+  margin-bottom: 20px;;
+}
+

@@ -4,8 +4,8 @@
 			<img src="/img/EfilmLogo.png" width="25" height="25" alt="Logo"><strong>EFilm</strong>
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-				  aria-expanded="false"
-				  aria-label="Toggle navigation">
+				aria-expanded="false"
+				aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
@@ -16,18 +16,21 @@
 				<li class="nav-item">
 					<a class="nav-link text-white" href="/about">About</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" href="/movie/movieMenu">More Movies</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				{{#if user}}
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle text-white data-toggle='tab'" data-toggle="dropdown" id="navbarDropdownMenuLink">Movies</a>
+				<li class="nav-item dropdown">
+						<a href="#" class="nav-link dropdown-toggle text-white data-toggle='tab'" data-toggle="dropdown" id="navbarDropdownMenuLink">Movie</a>
 						<div class="dropdown-menu">
-							<a href="/video/listVideos" class="dropdown-item">Movies</a>
-							<a href="/video/addVideo" class="dropdown-item">Add Movie</a>
+							<a class="dropdown-item" href="/movie/listMovies">Edit Movies</a>
+							<a class="dropdown-item" href="/movie/showAddMovie">Add Movie</a>
 						</div>
 					</li>
 					<li class="nav-item">
-						<a href="/Payment" class="nav-link text-white data-toggle='tab'">Payment</a>
+						<a href="/cart" class="nav-link text-white data-toggle='tab'">Cart 🛒</a>
 					</li>
 					<li class="nav-item">
 						<a href="/logout" class="nav-link text-white data-toggle='tab'">Logout</a>

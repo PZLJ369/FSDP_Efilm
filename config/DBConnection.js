@@ -1,8 +1,10 @@
 const mySQLDB = require('./DBConfig');
 const user = require('../models/User');
-const video = require('../models/Video');
 const creditpay = require('../models/CPayments');
-const enetspay = require('../models/EPayments');
+const payhistory = require('../models/PayHistory');
+const cartitem = require('../models/CartItem');
+const movie = require('../models/Movie');
+// const enetspay = require('../models/EPayments');
 
 // If drop is true, all existing tables are dropped and recreated
 const setUpDB = (drop) => {
@@ -16,9 +18,11 @@ const setUpDB = (drop) => {
             In this case the primary key from user will be a foreign key
             in video.
             */
-            user.hasMany(video);
             user.hasMany(creditpay);
-            user.hasMany(enetspay);
+            user.hasMany(payhistory);
+            user.hasMany(cartitem);
+            user.hasMany(movie);
+
             mySQLDB.sync({ // Creates table if none exists
                 force: drop
             }).then(() => {

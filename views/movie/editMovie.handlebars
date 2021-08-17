@@ -1,0 +1,195 @@
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+<div class="container">
+	<div class="card card-body mx-auto">
+		<h3>Edit Movie </h3>
+		<form action="/movie/saveEditedMovie/{{movie.id}}?_method=PUT" method="post">
+			<input type="hidden" name="_method" value="PUT">
+			<div class="row mb-2">
+				<div class="col-lg-9">
+					<div class="form-group">
+						<label class="font-italic" for="title">Movie Title</label>
+						<input id="title" type="text" class="form-control" onblur="initialiseTitle()" name="title" value="{{movie.title}}" required>
+						<span class="font-weight-bold text-info" id="OMdbErr" style="display:none">Unavailable</span>
+					</div>
+					<div class="form-group">
+						<label class="font-italic" for="description">Description</label>
+						<textarea class="form-control" id="description" name="description" rows="6" value="{{movie.description}}"></textarea>
+					</div>
+                    <div class="col-12 col-sm-5 col-md-5 col-lg-6 mb-4">
+						<label class="font-italic">Date release</label>
+						<input id="datepicker" width="200" name="dateRelease" value="{{movie.dateRelease}}"readonly />
+					</div>
+				</div>
+{{!-- 				<div class="col-lg-3 mb-4">
+					<input type="file" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+					<img id="poster" src="/img/no-image.jpg" alt="" class="border img-thumbnail img-fluid"
+						style="height:95%;width:100%">
+					<input id="posterURL" type="hidden" name="posterURL">
+					<div class="font-weight-bold text-danger small" id="posterErr" style="display:none"></div>
+				</div> --}}
+				<div class="col-lg-3 mb-4">
+					<input type="file" id="posterUpload" name="posterUpload" accept="image/png,image/jpeg,image/jpg,image/gif">
+					<a href="{{movie.posterURL}}" data-title="{{movie.title}}" data-toggle="lightbox">
+						<img id="poster" {{#if movie.posterURL}} src="{{movie.posterURL}}" {{else}} src="/img/no-image.jpg"  {{/if}} alt=""
+							name="posterURL" class="border img-thumbnail img-fluid" style="height:95%;width:100%">
+					</a>
+					<input id="posterURL" type="hidden" name="posterURL" value="{{movie.posterURL}}">
+					<div class="font-weight-bold text-danger small" id="posterErr" style="display:none"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row mb-2 mt-4">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic">Main Genre</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Action" value="Action" name="genre"{{radioCheck movie.genre 'Action'}}>
+							<label class="form-check-label" for="Action">Action</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Comedy" value="Comedy" name="genre"{{radioCheck movie.genre 'Comedy'}}>
+							<label class="form-check-label" for="Comedy">Comedy</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Drama" value="Drama" name="genre"{{radioCheck movie.genre 'Drama'}}>
+							<label class="form-check-label" for="Drama">Drama</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="Fantasy" value="Fantasy" name="genre"{{radioCheck movie.genre 'Fantasy'}}>
+							<label class="form-check-label" for="Fantasy">Fantasy</label>
+						</div>
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic" for="ticketPrice">Ticket Price ($)</label>
+						<input id="ticketPrice" type="number" class="form-control"  name="ticketPrice" min="0" step="1" maxlength="3" value="{{movie.ticketPrice}}"required>
+					</div>
+				</div>
+			</div>
+
+
+			
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic">Subtitles</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="subtitles" id="Chinese" value="Chinese" {{radioCheck movie.subtitles 'Chinese'}}>
+							<label class="form-check-label" for="chinese">Chinese</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="subtitles" id="English" value="English" {{radioCheck movie.subtitles 'English'}}>
+							<label class="form-check-label" for="englishLang">English</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="subtitles" id="Malay" value="Malay" {{radioCheck movie.subtitles 'Malay'}}>
+							<label class="form-check-label" for="malay">Malay</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="subtitles" id="Tamil" value="Tamil" {{radioCheck movie.subtitles 'Tamil'}}>
+							<label class="form-check-label" for="tamil">Tamil</label>
+						</div>
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic">Classification</label>
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="G" value="G" name="classification" {{radioCheck movie.classification 'G'}} checked>
+							<label class="form-check-label" for="G">G</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="PG" value="PG" name="classification" {{radioCheck movie.classification 'PG'}}>
+							<label class="form-check-label" for="PG">PG</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="PG13" value="PG13" name="classification"{{radioCheck movie.classification 'PG13'}}>
+							<label class="form-check-label" for="PG13">PG13</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="NC13" value="NC13" name="classification"{{radioCheck movie.classification 'NC13'}}>
+							<label class="form-check-label" for="NC13">NC13</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="M18" value="M18" name="classification"{{radioCheck movie.classification 'M18'}}>
+							<label class="form-check-label" for="M18">M18</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" id="R21" value="R21" name="classification"{{radioCheck movie.classification 'R21'}}>
+							<label class="form-check-label" for="R21">R21</label>
+						</div>
+					</div>
+					<br><br><br><br>
+
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+						<label class="font-italic" for="url">Movie Trailer URL</label>
+						<!-- change type string to url-->
+						<input id="url" type="text" class="form-control" onblur="initialiseUrl()" name="url"  required>
+						<input type="button" value='Click To Load Trailer!'id="sendUrl" onclick="getId" />
+						<br><br>
+						<h6>Trailer:<pre id="myVideo"></pre></h6>
+					</div>
+				</div>
+			</div>
+			<button type="submit" disabled style="display: none" aria-hidden="true"></button>
+			<input class="btn btn-outline-primary" type="submit" value="Save">
+		</form>
+	</div>
+
+
+<script>
+	$('#datepicker').datepicker({
+		format: 'dd/mm/yyyy',
+		uiLibrary: 'bootstrap4',
+	})
+	$(document).ready(function(){
+	$('#sendUrl').click(function(){
+		function getId(url) {
+		var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		var match = url.match(regExp);
+
+		if (match && match[2].length == 11) {
+			return match[2];
+		} else {
+			return 'error';
+		}
+	}
+	var videoId = $('#url').val();
+	var myId = getId(videoId);
+
+	$('#videoSrc').html(myId);
+
+	$('#myVideo').html('<iframe src="//www.youtube.com/embed/' + myId + '" frameborder="0" width="500" height="309" allowfullscreen></iframe>');
+	})
+
+	/*function saveVideo(){
+	var myVideosave = $("#myVideosave").val();
+
+
+	var jsonToSend = {
+		myVideosave: myVideosave,
+	};
+	$.ajax({
+		type: "POST",
+		contentType: "application/json",
+		url: "../policy/nat?id=" + id,
+		data: JSON.stringify(sendInfo),
+		success: function(data) {
+		alert("Successfully added information");
+
+		},
+		error: function(error) {
+		alert("Error while Adding Information...");
+		}
+	});
+
+	}
+	$("#btnSaveVideo").click(function(){ 
+    saveDetail();*/
+	});
+
+
+</script>

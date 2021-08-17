@@ -1,0 +1,71 @@
+{{!-- Cart --}}
+<div id="all-movies" class="card">
+  <div class="card-header text-white d-flex justify-content-between" style="border-color:aliceblue;">
+    <strong>Your Cart 🛒</strong>
+    {{#if errors}}
+      <a class="btn btn-primary btn-sm" href="/cart"><i class="fas fa-redo-alt"></i></a>
+    {{/if}}
+  </div>
+
+  <div class="card-body yourCart" id="yourCartView">
+  {{#if user}}  
+  {{!-- items in cart --}}
+  {{#each cartitem}}
+  <div class="cart-item">
+    <div class="row movie-row">
+
+      <div class="col-md-2">
+        <img src="{{MovieImgURL}}" class="card-img" alt="inCart">
+      </div>
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <span class="card-title"><strong>{{ticketTitle}}</strong></span><span> | </span>
+          <span class="card-text movie-price">{{ticketPrice}} / ticket</span>
+          <hr>
+        
+          <form action="/cart" method="post">
+              <div class="form-group">
+                <label for="ticketTitle">Movie title:</label>
+                
+                <input class="form-control" value="{{ticketTitle}}" name="ticketTitle" readonly>
+              </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="ticketNumber">Number of ticket:</label>
+                <input type="number" name="ticketNumber" class="form-control ticketNumber" value="1" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="ticketDate">Watching date:</label>
+                <input id="datepicker" class="form-control datepicker" type="date" name="ticketDate"/>
+              </div>
+
+            </div>
+            <hr>
+
+            <div class="d-flex justify-content-between">
+              <a href="/remove/{{id}}" class="btn btn-danger btn-sm" data-toggle="confirmation" data-title="Remove?" data-singleton="true">
+                <i class="far fa-trash-alt"></i>
+              </a>
+
+              <button class="PayBtn btn btn-success btn-sm text-white" type="submit">Select Seats</button>
+
+            </div>
+          </form>
+
+        </div>
+      </div> 
+    </div>
+  </div>
+  {{/each}}
+  
+  {{else}}
+    <span style="color: aliceblue;">
+      <a id="cart-login" href="/showLogin">Login</a> before viewing your cart 
+    </span>
+  {{/if}}
+  </div>
+</div>
+
+<br>

@@ -1,0 +1,310 @@
+<!--.col-	.col-sm-	.col-md-	.col-lg-	.col-xl- -->
+<style>
+	button{
+		border: none;
+		text-align: center;
+		display: inline-block;
+		color: black;
+		padding: 10px 32px;
+	}
+	.right{
+		float: right;
+	}
+	.bold hr{
+    border: none;
+    height: 1px;
+    color: rgb(87, 87, 87);
+    background-color: #333;
+	}
+	.dropbtn {
+	background-color: #4CAF50;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+	cursor: pointer;
+	}
+
+	.dropbtn:hover, .dropbtn:focus {
+	background-color: #3e8e41;
+	}
+
+	#myInput {
+	box-sizing: border-box;
+	background-repeat: no-repeat;
+	font-size: 16px;
+	padding: 14px 20px 12px 45px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	}
+
+	#myInput:focus {outline: 3px solid #ddd;}
+
+	.dropdown {
+	position: relative;
+	display: inline-block;
+	}
+
+	.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f6f6f6;
+	min-width: 230px;
+	overflow: auto;
+	border: 1px solid #ddd;
+	z-index: 1;
+	}
+
+	.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	}
+
+	.filterDiv {
+	display: none;
+	}
+
+
+	.show {
+	display: block;
+	}
+
+	.container {
+	overflow: hidden;
+	}
+	.dropdown{
+		float:right!important
+	}
+	#myInput {
+	background-image: url('/img/search.png');
+	background-position: 10px 12px;
+	background-repeat: no-repeat;
+	width: 100%;
+	font-size: 16px;
+	padding: 12px 20px 12px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+	}
+	#myUL {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	}
+
+	#myUL li a:hover:not(.header) {
+	background-color: #eee;
+	}
+</style>
+
+<div class="container">
+{{!-- 	<div class="right">
+		<a href="/movie/viewMovie">
+			<img border="0" alt="Simplified View" src="/img/detail1.png" width="50" height="50">
+		</a>
+		<a href="/movie/movieMenu">
+			<img border="0" alt="Detailed View" src="/img/detail2.png" width="50" height="50">
+		</a>
+	</div> --}}
+	{{#if movies}}
+	<div class="card card-body">
+		<h3 class="text-primary">Movies</h3>
+		<br>
+
+		
+		<div class="dropdown">
+			<button onclick="myFunction()" class="dropbtn">Movie Filter ▼</button>
+			<div id="myDropdown" class="dropdown-content">
+				<input type="text" placeholder="Search.." id="myInput" onkeyup="FilterFunction()"><br>
+				<button class="btn active" onclick="filterSelection('all')"> Show all</button>
+				<ul id="myUL">
+					{{#each movies}}
+					<hr>
+					<li><button class="btn" onclick="filterSelection('{{title}}')">{{title}}</button></li>
+					
+					{{/each}}
+					<br>
+				</ul>
+			</div>
+        </div>
+		<br>
+
+
+
+		{{#each movies}}
+		<div class="card border-primary mb-2 w-100 mx-auto" >
+			<div class= "filterDiv {{title}}">
+				<div class="card-header">
+					<h5 class="card-title">{{title}}</h5>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-12 col-md-12 col-lg-2">
+							<a href="{{posterURL}}" data-title="{{title}}" data-toggle="lightbox">
+								<object data="{{posterURL}}" class="card-img-top movieImg" style="border: 1px solid #555;">
+									<img src="/img/no-image.jpg"  class="card-img-top movieImg" style="border: 1px solid #555;"/>
+								</object>
+							</a>
+						</div>
+
+						<div class="col-sm-12 col-md-12 col-lg-8">
+							<div class="row"> {{!-- subtitles, language... --}}
+								<div class="col-sm-12 col-md-6 col-lg-3">
+									<p class="font-italic">Subtitles</p>
+									<p class="text-info">
+										{{subtitles}}
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-2">
+									<p class="font-italic">Class</p>
+									<p class="text-info">{{classification}}</p>
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-3">
+									<p class="font-italic">Date Release</p>
+									<p class="text-info">{{formatDate dateRelease 'DD MMM YYYY'}}</p>
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-3">
+									<p class="font-italic">Genre</p>
+									<p class="text-info">
+										{{genre}}
+									</p>
+								</div>
+								<div class="col-sm-12 col-md-6 col-lg-3">
+									<p class="font-italic">Price</p>
+									<p class="text-info">
+										${{ticketPrice}}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="accordion" id="descriptionAccordion{{id}}">
+					<div class="card-header" id="headingOne{{id}}">
+						<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne{{id}}"
+							aria-expanded="false" aria-controls="collapseOne{{id}}">
+							Description And Trailer<i class="fas fa-chevron-down"></i>
+						</button>
+					</div>
+
+					<div id="collapseOne{{id}}" class="collapse" aria-labelledby="headingOne{{id}}"
+						data-parent="#descriptionAccordion{{id}}">
+						<div class="card-body">
+							<h5>Trailer:</h5>
+							<form action=""></form>
+								<div class="form-check form-check-inline">
+								<input type="text" id="url" value="{{url}}" disabled="disabled" class="form-control" size="120"/>
+								</div>
+								<br><br>
+								<input type="button" value='Click Here To Show Trailer!'id="sendUrl" onclick="getId()" class="btn btn-outline-secondary" />
+							</form>
+							<br><br>
+							<pre id="myVideo" ></pre>
+							<hr class="bold"><br>
+							<h5>Description: </h5>
+							{{description}}
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		{{/each}}
+
+	</div>
+
+</div>
+{{else}}
+<h3 style="color:white;">No movies avaliable</h3>
+{{/if}}
+
+<script>
+	$(document).ready(function(){
+	$('#sendUrl').click(function(){
+		function getId(url) {
+		var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		var match = url.match(regExp);
+
+		if (match && match[2].length == 11) {
+			return match[2];
+		} else {
+			return 'error';
+		}
+	}
+	var videoId = $('#url').val();
+	var myId = getId(videoId);
+
+	$('#videoSrc').html(myId);
+
+	$('#myVideo').html('<iframe src="//www.youtube.com/embed/' + myId + '" frameborder="0" width="500" height="309" allowfullscreen></iframe>');
+	})
+	});
+	
+
+	function myFunction() {
+			document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+	filterSelection("all")
+	
+	function filterSelection(c) {
+		var x, i;
+		x = document.getElementsByClassName("filterDiv");
+		if (c == "all") c = "";
+		for (i = 0; i < x.length; i++) {
+		w3RemoveClass(x[i], "show");
+		if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+	}
+	}
+
+	function w3AddClass(element, name) {
+	var i, arr1, arr2;
+	arr1 = element.className.split(" ");
+	arr2 = name.split(" ");
+	for (i = 0; i < arr2.length; i++) {
+	if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+	}
+	}
+
+	function w3RemoveClass(element, name) {
+	var i, arr1, arr2;
+	arr1 = element.className.split(" ");
+	arr2 = name.split(" ");
+	for (i = 0; i < arr2.length; i++) {
+	while (arr1.indexOf(arr2[i]) > -1) {
+		arr1.splice(arr1.indexOf(arr2[i]), 1);
+	}
+	}
+	element.className = arr1.join(" ");
+	}
+
+	var btnContainer = document.getElementById("myBtnContainer");
+	var btns = btnContainer.getElementsByClassName("btn");
+	for (var i = 0; i < btns.length; i++) {
+	btns[i].addEventListener("click", function(){
+		var current = document.getElementsByClassName("active");
+		current[0].className = current[0].className.replace(" active", "");
+		this.className += " active";
+	});
+	}
+
+	function FilterFunction() {
+		var input, filter, ul, li, a, i, txtValue;
+		input = document.getElementById("myInput");
+		filter = input.value.toUpperCase();
+		ul = document.getElementById("myUL");
+		li = ul.getElementsByTagName("li");
+		for (i = 0; i < li.length; i++) {
+			a = li[i].getElementsByTagName("a")[0];
+			txtValue = a.textContent || a.innerText;
+			if (txtValue.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}	
+
+</script>

@@ -1,0 +1,28 @@
+<center>
+  <div class="card" style="background-color: black;">
+    <div class="container">
+      <div class="row justify-content-start">
+        <div class="col-0">
+          <a href="/" class="btn btn-light" id=""><i class="fas fa-chevron-left"></i></a>
+        </div>
+        {{#if movies}}
+        <div class="col-11">
+          <span class="text-white"><strong>{{movies.title}} | Tailer</strong></span>
+        </div>
+        {{else}}
+        <div class="col-11">
+          <span class="text-white"><strong>~~ Sorry! No trailer avaliable ~~</strong></span>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{#if movies}}
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe class="embed-responsive-item" src="{{movies.url}}" title="YouTube video player" 
+      frameborder="2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; 
+      picture-in-picture" allowfullscreen="true"></iframe>
+    </div>
+    {{/if}}
+  </div>
+</center>
+<br>

@@ -9,7 +9,7 @@
 
   </div>
   <br>
-{{!-- enter card details --}}
+{{!-- enter Card details --}}
 <div class="container">
 <div class="row justify-content-md-around">
 <div class="col-12 col-md-7">
@@ -18,23 +18,29 @@
 
   	<form action="/payments/creditpays" method="post">
 				<div class="form-group mx-sm-4">
-					<label for="cardNumber">Card Number</label>
+					<label for="cardNumber">Card Number:</label>
 					<input type="text" class="form-control" name="cardNumber" required>
 				</div>
-        <div class="form-group mx-sm-4">
-					<label for="expiryDate">Expiry Date</label>
-          <input id="datepicker" name="expiryDate" readonly />
-					{{!-- <input type="date" name="expiryDate" class="form-control" value="{{expiryDate}}" required> --}}
-				</div>
+        <div class="d-flex justify-content-between">
+          <div class="form-group mx-sm-4">
+            <label for="expiryDate">Expiration Date:</label>
+            <input id="datepicker" name="expiryDate" readonly />
+          </div>
+          <div class="form-group mx-sm-4">
+            <label for="cvv">CVV:</label>
+            <input type="number" class="form-control" name="cvv" required>
+          </div>
+        </div>
 				<div class="form-group mx-sm-4">
-					<label for="cardHolder">Cardholder's Name</label>
+					<label for="cardHolder">Cardholder's Name:</label>
 					<input type="text" name="cardHolder" class="form-control" required>
 				</div>
         <hr class="mx-sm-4">
         <div class="d-flex justify-content-between mx-sm-4">
-          <a href="/Payment" class="btn btn-outline-secondary">Cancel</a>
-          {{!-- <a href="/payments/creditview" class="btn btn-success">Pay</a> --}}
-          <button type="submit" class="btn btn-success">Pay</button>
+          {{#if cartitem}}
+            <a href="/payments/removeifCancel/{{payhistory.id}}" class="btn btn-outline-secondary btn-sm">Cancel</a>
+          {{/if}}
+          <button class="btn btn-success btn-sm" type="submit">Pay</button>
         </div>
 			</form>
       
@@ -44,13 +50,14 @@
 <div class="col-6 col-md-4">
   <div class="card card-body" style="box-shadow: 0.3px 0.3px #888888;">
       <div>
-        <h5 style="color:rgb(49, 202, 158)">Display items</h5>
+        <div class="d-flex justify-content-between" style="color:rgb(49, 202, 158)"><h6>Movie:</h6><h6>Tickets:</h6><h6>Total Price:</h6></div>
         <hr>
-        <div>item 1</div>
-        <div>item 2</div>
-        <div>item 3</div>
+        {{#if cartitem}}
+          <div class="d-flex justify-content-between"><span>{{payhistory.ticketTitle}}</span><span>{{payhistory.ticketNumber}}</span><span>{{totalPrice}}</span></div>
+        {{/if}}
+
         <hr>
-        <div class="d-flex justify-content-between"><span>Total Price:</span><strong>S$ <span style="color: red;">...</span></strong></div>
+        <div class="d-flex justify-content-between"><h6>Total Price:</h6><h5>S$<span style="color: red; ">{{totalPrice}}</span></h5></div>
       </div>
     </div>
 </div>
@@ -60,6 +67,7 @@
 <br>
 </div>
 
+{{!-- Javascript --}}
 <script>
 	$('#datepicker').datepicker({
 		format: 'dd/mm/yyyy',

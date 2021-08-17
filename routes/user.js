@@ -1,21 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
 const User = require('../models/User');
 const alertMessage = require('../helpers/messenger');
-
 var bcrypt = require('bcryptjs');
-
 const passport = require('passport');
+
+
 // Login Form POST => /user/login
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/', // Route to /video/listVideos URL
         failureRedirect: '/showLogin', // Route to /login URL
         failureFlash: true
-        /* Setting the failureFlash option to true instructs Passport to flash an error message using the
-       message given by the strategy's verify callback, if any. When a failure occur passport passes the message
-       object as error */
     })(req, res, next);
 });
 
@@ -23,13 +19,10 @@ router.post('/login', (req, res, next) => {
 // User register URL using HTTP post => /user/register
 router.post('/register', (req, res) => {
     let errors = [];
-    // Retrieves fields from register page from request body
     let { name, email, password, password2 } = req.body;
-    // Checks if both passwords entered are the same
     if (password !== password2) {
         errors.push({ text: 'Passwords do not match' });
     }
-    // Checks that password length is more than 4
     if (password.length < 4) {
         errors.push({ text: 'Password must be at least 4 characters' });
     }
@@ -42,12 +35,9 @@ router.post('/register', (req, res) => {
             password2
         });
     } else {
-        // If all is well, checks if user is already registered
         User.findOne({ where: { email: req.body.email } })
             .then(user => {
                 if (user) {
-                    // If user is found, that means email has already been
-                    // registered
                     res.render('user/register', {
                         error: user.email + ' already registered',
                         name,
@@ -64,7 +54,6 @@ router.post('/register', (req, res) => {
                                 throw err;
                             } else {
                                 password = hash;
-
                                 // Create new user record
                                 User.create({ name, email, password })
                                     .then(user => {
